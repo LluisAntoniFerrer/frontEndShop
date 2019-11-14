@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Route from 'react-router-dom/Route'
+import products from './views/Products'
+import detail from './views/Detail'
+import Home from './views/Home'
+import { BrowserRouter } from 'react-router-dom'
+import './css/App.css';
+import { connect } from 'react-redux';
+import {getHome} from './actions/home'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Nav from "./components/NavBar"
+class App extends Component {
+  componentDidMount() {
+    if (this.props.state === "0") {
+      this.props.getHome();
+    }
+  }
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
+          <div>
+            <Nav />
+            <section>
+              <Route exact path="/" component={Home} />
+              <Route path="/productos/:id" component={products} />
+              <Route path="/detail/:type_id/:product_id" component={detail} />
+            </section>
+            <footer className='footer mt-auto py-3 bg-dark text-white'>
+              <div className='container'>@Lluis Antoni Ferrer Muñoz</div>
+            </footer>
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  products: state.home.products,
+  state: state.home.state
+})
+
+const mapDispatchToProps = dispatch => ({
+  getHome: () => dispatch(getHome())
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
