@@ -29,3 +29,20 @@ footer {
   height: 60px;
   width: 100%;
 }
+
+.label-link {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+  
+}
+.label-link {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+.label-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+  cursor: pointer;
+}

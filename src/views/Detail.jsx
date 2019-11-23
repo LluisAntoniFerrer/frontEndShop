@@ -3,7 +3,6 @@ import { Card, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getProduct, changeStock } from '../actions/products.js'
 import { buyProduct } from '../actions/user.js'
-import '../css/Detail.css'
 
 class Detail extends React.Component {
     componentDidMount() {
@@ -61,9 +60,8 @@ class Detail extends React.Component {
 
                                             )}
                                         </select>
-                                        <p>
-                                            {this.props.productStock ? this.props.productStock.description : " "}
-                                        </p>
+                                        <br />
+                                        {this.props.productStock ?  <span> {this.props.productStock.description} </span>: ""}
                                     </Card.Text>
                                 </Col>
                             </Row>
