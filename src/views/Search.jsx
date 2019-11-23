@@ -1,21 +1,21 @@
 import React from 'react';
 import ProductsList from '../components/ProductsList'
 import { connect } from 'react-redux';
-import { getProductsByType } from '../actions/products.js'
+import { searchProducts } from '../actions/products.js'
 
-class Products extends React.Component {
+class Search extends React.Component {
     componentDidMount() {
-            this.setState({ type: this.props.match.params.id });
-            this.props.getProductsByType(this.props.match.params.id);
+            this.setState({ search: this.props.match.params.search });
+            this.props.searchProducts(this.props.match.params.search);
     }
     componentDidUpdate() {
-        if (this.state.type !== this.props.match.params.id) {
-            this.setState({ type: this.props.match.params.id });
-            this.props.getProductsByType(this.props.match.params.id);
+        if (this.state.search !== this.props.match.params.search) {
+            this.setState({ search: this.props.match.params.search });
+            this.props.searchProducts(this.props.match.params.search);
         }
     }
     state = {
-        type: 0
+        search: 0
     }
     render() {
         return (
@@ -34,10 +34,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getProductsByType: (type) => dispatch(getProductsByType(type))
+    searchProducts: (search) => dispatch(searchProducts(search))
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Products);
+)(Search);

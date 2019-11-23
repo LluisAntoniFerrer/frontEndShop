@@ -1,24 +1,8 @@
 const INITIAL_STATE = {
-    products: [
-        {
-            id:1,
-            image: "https://images-na.ssl-images-amazon.com/images/I/41BY0%2BbChwL._AC_SY400_.jpg",
-            name: "aaaa",
-            price: "300,15"
-        },
-        {
-            id:2,
-            image: "https://images-na.ssl-images-amazon.com/images/I/41BY0%2BbChwL._AC_SY400_.jpg",
-            name: "vvvvvv",
-            price: "300,15"
-        },
-        {
-            id:3,
-            image: "https://images-na.ssl-images-amazon.com/images/I/41BY0%2BbChwL._AC_SY400_.jpg",
-            name: "ccccccccccc",
-            price: "300,15"
-        }
-    ]
+    products: null,
+    product: null,
+    productStock: null,
+    pages: 0
 }
 const products = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -26,6 +10,18 @@ const products = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 products: action.payload.products,
+                pages: action.payload.pages
+            }
+        case "SEARCH_PRODUCT":
+            return {
+                ...state,
+                product: action.payload.product,
+                productStock: null
+            }
+        case "CHANGE_STOCK":
+            return {
+                ...state,
+                productStock: action.payload.productStock
             }
         default:
             return state;

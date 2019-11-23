@@ -2,8 +2,9 @@ import { combineReducers } from 'redux'
 
 //Dependencias de Reducers
 import products from './products.js'
-import home from './home.js'
+import init from './init.js'
 import auth from './auth.js'
+import user from './user.js'
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { persistReducer } from 'redux-persist'
@@ -11,8 +12,9 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 
 let rootReducer = combineReducers({
     products,
-    home,
-    auth
+    init,
+    auth,
+    user
 });
 const persistConfig = {
   key: 'root',

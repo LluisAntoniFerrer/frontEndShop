@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import Route from 'react-router-dom/Route'
+import {Route} from 'react-router-dom'
 import products from './views/Products'
 import detail from './views/Detail'
+import search from './views/Search'
+import CompleteBuy from './views/CompleteBuy'
 import Home from './views/Home'
+import MyBills from './views/MyBills'
 import { BrowserRouter } from 'react-router-dom'
 import './css/App.css';
 import { connect } from 'react-redux';
-import {getHome} from './actions/home'
+import {getTypes} from './actions/init'
 
 import Nav from "./components/NavBar"
 class App extends Component {
   componentDidMount() {
-    if (this.props.state === "0") {
-      this.props.getHome();
-    }
+      this.props.getTypes();
   }
   render() {
     return (
@@ -24,7 +25,10 @@ class App extends Component {
             <section>
               <Route exact path="/" component={Home} />
               <Route path="/productos/:id" component={products} />
-              <Route path="/detail/:type_id/:product_id" component={detail} />
+              <Route path="/detail/:product_id" component={detail} />
+              <Route path="/search/:search" component={search} />
+              <Route path="/mybills" component={MyBills} />
+              <Route path="/completeBuy" component={CompleteBuy} />
             </section>
             <footer className='footer mt-auto py-3 bg-dark text-white'>
               <div className='container'>@Lluis Antoni Ferrer Muñoz</div>
@@ -37,12 +41,10 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.home.products,
-  state: state.home.state
 })
 
 const mapDispatchToProps = dispatch => ({
-  getHome: () => dispatch(getHome())
+  getTypes: () => dispatch(getTypes())
 })
 export default connect(
   mapStateToProps,
