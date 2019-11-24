@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom'
 import products from './views/Products'
 import detail from './views/Detail'
 import search from './views/Search'
+import BestSellers from './views/BestSellers'
 import CompleteBuy from './views/CompleteBuy'
 import Home from './views/Home'
 import MyBills from './views/MyBills'
@@ -29,6 +30,7 @@ class App extends Component {
               <Route path="/search/:search" component={search} />
               <Route path="/mybills" component={MyBills} />
               <Route path="/completeBuy" component={CompleteBuy} />
+              <Route path="/bestsellers" component={BestSellers} />
             </section>
             <footer className='footer mt-auto py-3 bg-dark text-white'>
               <div className='container'>@Lluis Antoni Ferrer Muñoz</div>

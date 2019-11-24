@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
-import { Navbar, Nav, Form, FormControl, NavDropdown,Button, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, NavDropdown, Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { loginUser, logoutUser, registryUser } from '../actions/auth'
 import { FaUser } from "react-icons/fa";
@@ -31,6 +31,7 @@ class NavBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Link to="/" className={this.getNavLinkClass("/") + " nav-link"}>Home</Link>
+                        <Link to="/bestsellers" className={this.getNavLinkClass("/bestsellers") + " nav-link"}>Mas vendidos</Link>
                         <NavDropdown title="Productos" id="collasible-nav-dropdown">
                             {this.props.productsTypes && this.props.productsTypes.map(type => (
                                 <Link key={type.id} to={"/productos/" + type.id}
@@ -41,30 +42,30 @@ class NavBar extends React.Component {
                             ))}
                         </NavDropdown>
                     </Nav>
-                    <Form onSubmit={(ev) => { this.handleSendMessage(ev) }} inline>
+                    <Form className="login-button" onSubmit={(ev) => { this.handleSendMessage(ev) }} inline>
                         <FormControl type="text" placeholder="Search" onChange={e => { this.setState({ text: e.target.value }) }} className="mr-sm-2" />
                     </Form>
-                </Navbar.Collapse>
-                {this.props.token ?
-                    <DropdownButton drop={"left"} id="bg-vertical-dropdown-3" title={<FaUser />}>
-                        <Dropdown.Item as="button" onClick={() => { this.props.logoutUser() }}>Logout</Dropdown.Item>
-                        <Link to={"/mybills"} className="dropdown-item">Mis pedidos</Link>
-                    </DropdownButton> :
-                    <Button  onClick = {()=>{ this.setState({showLoginModal: true})}}>
-                        Login
+                    {this.props.token ?
+                        <DropdownButton className="login-button" drop={"left"} id="bg-vertical-dropdown-3" title={<FaUser />}>
+                            <Dropdown.Item as="button" onClick={() => { this.props.logoutUser() }}>Logout</Dropdown.Item>
+                            <Link to={"/mybills"} className="dropdown-item">Mis pedidos</Link>
+                        </DropdownButton> :
+                        <Button className="login-button" onClick={() => { this.setState({ showLoginModal: true }) }}>
+                            Login
                         <LoginModal
-                            show={this.state.showLoginModal}
-                            onLoginHide={() => this.setState({ showLoginModal: false })}
-                            registry={() => this.setState({ showRegistryModal: true })}
-                            loginUser={this.props.loginUser}
-                        />
-                        <RegistryModal
-                            show={this.state.showRegistryModal}
-                            onHide={() => this.setState({ showRegistryModal: false })}
-                            registryUser={this.props.registryUser}
-                        />
-                    </Button>
-                }
+                                show={this.state.showLoginModal}
+                                onLoginHide={() => this.setState({ showLoginModal: false })}
+                                registry={() => this.setState({ showRegistryModal: true })}
+                                loginUser={this.props.loginUser}
+                            />
+                            <RegistryModal
+                                show={this.state.showRegistryModal}
+                                onHide={() => this.setState({ showRegistryModal: false })}
+                                registryUser={this.props.registryUser}
+                            />
+                        </Button>
+                    }
+                </Navbar.Collapse>
             </Navbar>
         )
     }

@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     products: null,
-    productsTypes:null,
-    pages:0
+    recommended: [],
+    productsTypes: null,
+    pages: 0
 }
 const init = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -14,7 +15,28 @@ const init = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 products: action.payload.products,
-                pages:  action.payload.pages
+                pages: action.payload.pages
+            }
+        case "INSERT_RECOMMENDED":
+            let inArray = false;
+            state.recommended.map((product) => {
+                if (action.payload.recommended.id === product.id) {
+                    return inArray = true;
+                }
+                return ""
+            })
+            if (!inArray) {
+                if (state.recommended.length === 5) {
+                    state.recommended.shift()
+                }
+                return {
+                    ...state,
+                    recommended: [...state.recommended, action.payload.recommended]
+                }
+            }
+            return {
+                ...state,
+                recommended: [...state.recommended]
             }
         default:
             return state;

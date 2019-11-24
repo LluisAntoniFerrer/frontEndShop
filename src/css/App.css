@@ -46,3 +46,6 @@ footer {
   text-decoration: underline;
   cursor: pointer;
 }
+section{
+  margin-bottom: 70px;
+}

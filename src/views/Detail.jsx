@@ -3,6 +3,7 @@ import { Card, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getProduct, changeStock } from '../actions/products.js'
 import { buyProduct } from '../actions/user.js'
+import { insertRecommended } from '../actions/init.js'
 
 class Detail extends React.Component {
     componentDidMount() {
@@ -17,7 +18,7 @@ class Detail extends React.Component {
         });
     }
     componentWillUnmount() {
-        this.props.changeStock(null);
+        this.props.insertRecommended(this.props.product[0].product);
     }
     buyComplete() {
         this.props.buyProduct(this.props.token, this.props.productStock.id);
@@ -100,7 +101,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getProduct: (id) => dispatch(getProduct(id)),
     changeStock: (stock) => dispatch(changeStock(stock)),
-    buyProduct: (token, product) => dispatch(buyProduct(token, product))
+    buyProduct: (token, product) => dispatch(buyProduct(token, product)),
+    insertRecommended: (product) => dispatch(insertRecommended(product))
 })
 
 export default connect(

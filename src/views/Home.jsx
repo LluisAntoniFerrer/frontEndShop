@@ -13,6 +13,12 @@ class Home extends React.Component {
         return (
             <div className='homeView'>
                 {/* <CarouselProducts /> */}
+                {this.props.recommended.length > 0 &&
+                    <div>
+                        <h3>Te recomendamos</h3>
+                        <ProductsList products={this.props.recommended} />
+                    </div>
+                }
                 {this.props.products &&
                     <div>
                         <h3>Los mas vendidos</h3>
@@ -24,7 +30,8 @@ class Home extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    products: state.init.products
+    products: state.init.products,
+    recommended: state.init.recommended
 })
 
 const mapDispatchToProps = dispatch => ({
