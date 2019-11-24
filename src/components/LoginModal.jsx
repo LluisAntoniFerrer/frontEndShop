@@ -17,7 +17,7 @@ class RegistryModal extends React.Component {
         try {
             let result = await this.props.loginUser(data);
             if (result) {
-                this.props.onLoginHide()
+                this.props.onHide()
             } else {
                 this.setState({ error: "Email o contraseña incorrecta" })
             }
@@ -37,7 +37,7 @@ class RegistryModal extends React.Component {
         return (
             <Modal
                 show={this.props.show}
-                onHide={this.props.onLoginHide}
+                onHide={this.props.onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -58,7 +58,6 @@ class RegistryModal extends React.Component {
                                 type="email"
                                 placeholder="Introduzca email" />
                         </Form.Group>
-
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Contraseña</Form.Label>
                             <Form.Control required onChange={this.handleChange}
@@ -69,14 +68,14 @@ class RegistryModal extends React.Component {
                     </Form>
                     <label className="label-link" onClick={() => {
                         this.props.registry();
-                        this.props.onLoginHide();
+                        this.props.onHide();
                     }
                     }>Registrarse</label>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.props.onLoginHide}>Cerrar</Button>
+                    <Button variant="secondary" onClick={this.props.onHide}>Cerrar</Button>
                     <Button variant="primary" type="button" onClick={() => { this.login() }}>
-                        Registrarse
+                        Logearse
           </Button>
                 </Modal.Footer>
             </Modal>

@@ -46,15 +46,21 @@ class NavBar extends React.Component {
                         <FormControl type="text" placeholder="Search" onChange={e => { this.setState({ text: e.target.value }) }} className="mr-sm-2" />
                     </Form>
                     {this.props.token ?
+
                         <DropdownButton className="login-button" drop={"left"} id="bg-vertical-dropdown-3" title={<FaUser />}>
                             <Dropdown.Item as="button" onClick={() => { this.props.logoutUser() }}>Logout</Dropdown.Item>
                             <Link to={"/mybills"} className="dropdown-item">Mis pedidos</Link>
-                        </DropdownButton> :
-                        <Button className="login-button" onClick={() => { this.setState({ showLoginModal: true }) }}>
-                            Login
-                        <LoginModal
+                        </DropdownButton>
+                        :
+                        <>
+                            <Button className="login-button" onClick={() => {this.setState({ showLoginModal: true })}}>
+                                Login
+                            </Button>
+                            <LoginModal
                                 show={this.state.showLoginModal}
-                                onLoginHide={() => this.setState({ showLoginModal: false })}
+                                onHide={() => {
+                                    this.setState({ showLoginModal: false })
+                                }}
                                 registry={() => this.setState({ showRegistryModal: true })}
                                 loginUser={this.props.loginUser}
                             />
@@ -63,7 +69,7 @@ class NavBar extends React.Component {
                                 onHide={() => this.setState({ showRegistryModal: false })}
                                 registryUser={this.props.registryUser}
                             />
-                        </Button>
+                        </>
                     }
                 </Navbar.Collapse>
             </Navbar>

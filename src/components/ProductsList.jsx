@@ -11,9 +11,9 @@ function ProducstsList(props) {
                     <Card bg="dark" text="white"  style={{ width: '16rem', margin: '15px' }}>
                         <Card.Img variant="top" src={product.image}/>
                         <Card.Body>
-                            <Card.Title> {product.name} </Card.Title>
+                            <Card.Title> {product.brand} </Card.Title>
                             <Card.Text>
-                                {product.price}
+                                {product.name}
                             </Card.Text>
                         </Card.Body>
                     </Card>

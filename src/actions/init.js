@@ -28,7 +28,6 @@ export const getBestSeller = (page = 0) => (dispatch) => {
 }
 
 export const insertRecommended = (product) => (dispatch) => {
-    console.log(product)
     dispatch({
         type: "INSERT_RECOMMENDED",
         payload: {
