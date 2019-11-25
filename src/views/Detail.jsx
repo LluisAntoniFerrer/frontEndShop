@@ -3,6 +3,7 @@ import { Card, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getProduct, changeStock } from '../actions/products.js'
 import { buyProduct } from '../actions/user.js'
+import { addProductToCart } from '../actions/cart.js'
 import { insertRecommended } from '../actions/init.js'
 
 class Detail extends React.Component {
@@ -20,9 +21,21 @@ class Detail extends React.Component {
     componentWillUnmount() {
         this.props.insertRecommended(this.props.product[0].product);
     }
-    buyComplete() {
-        this.props.buyProduct(this.props.token, this.props.productStock.id);
-        this.props.history.push(`/completeBuy`);
+    async buyComplete() {
+        try {
+            let result = await this.props.buyProduct(this.props.token, [this.props.productStock]);
+            if (result) {
+                this.props.history.push(`/completeBuy`);
+            } else {
+                console.log("Fallo en la compra")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    addToCart() {
+        this.props.addProductToCart(this.props.productStock);
+        this.props.history.push(`/`);
     }
     render() {
         if (this.props.product && !this.props.productStock) {
@@ -62,7 +75,7 @@ class Detail extends React.Component {
                                             )}
                                         </select>
                                         <br />
-                                        {this.props.productStock ?  <span> {this.props.productStock.description} </span>: ""}
+                                        {this.props.productStock ? <span> {this.props.productStock.description} </span> : ""}
                                     </Card.Text>
                                 </Col>
                             </Row>
@@ -73,7 +86,8 @@ class Detail extends React.Component {
                                 this.props.productStock && (
                                     this.props.productStock.stock > 0 ?
                                         <div>
-                                            <Button variant="primary" onClick={() => this.buyComplete()}>Comprar</Button>
+                                            <Button variant="primary" onClick={() => this.buyComplete()}>Comprar ya</Button><span> </span>
+                                            <Button variant="primary" onClick={() => this.addToCart()}>Añadir al carrito</Button>
                                             <br />
                                             <label>Hay {this.props.productStock.stock} unidad{this.props.productStock.stock === 1 ? "" : "es"} en Stock</label>
                                         </div>
@@ -102,7 +116,8 @@ const mapDispatchToProps = dispatch => ({
     getProduct: (id) => dispatch(getProduct(id)),
     changeStock: (stock) => dispatch(changeStock(stock)),
     buyProduct: (token, product) => dispatch(buyProduct(token, product)),
-    insertRecommended: (product) => dispatch(insertRecommended(product))
+    insertRecommended: (product) => dispatch(insertRecommended(product)),
+    addProductToCart: (product) => dispatch(addProductToCart(product))
 })
 
 export default connect(

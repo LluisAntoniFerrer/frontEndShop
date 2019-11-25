@@ -1,3 +1,16 @@
-.login-button{
-    margin-top:6px
+.login-button {
+    margin-top: 6px
+}
+
+.div-cart {
+    color: white;
+    font-size: 27px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.div-cart>.cart-count {
+    font-size: 17px;
+    color: red;
+    font-weight: bold;
 }

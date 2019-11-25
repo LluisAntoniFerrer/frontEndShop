@@ -2,7 +2,6 @@ import axios from 'axios';
 const URL = "http://localhost:8080/api/v1/product"
 
 export const getProductsByType = (type,page = 0) => (dispatch) => {
-    console.log(page)
     axios.get(URL+`/type/${type}?page=${page}`)
         .then(response => {
             dispatch({

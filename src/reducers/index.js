@@ -5,6 +5,7 @@ import products from './products.js'
 import init from './init.js'
 import auth from './auth.js'
 import user from './user.js'
+import cart from './cart.js'
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { persistReducer } from 'redux-persist'
@@ -14,12 +15,13 @@ let rootReducer = combineReducers({
     products,
     init,
     auth,
-    user
+    user,
+    cart
 });
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth']
+  whitelist: ['auth','cart']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

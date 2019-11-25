@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getBills = (token) => (dispatch) => {
     var completeUrl = (`http://localhost:8080/api/v1/bill`);
-    axios.get(completeUrl,{ headers: { Authorization: token } })
+    axios.get(completeUrl, { headers: { Authorization: token } })
         .then(response => {
             dispatch({
                 type: "GET_BILLS",
@@ -12,7 +12,7 @@ export const getBills = (token) => (dispatch) => {
                 },
             })
         })
-        .catch(error => { 
+        .catch(error => {
             dispatch({
                 type: "GET_BILLS",
                 payload: {
@@ -22,26 +22,20 @@ export const getBills = (token) => (dispatch) => {
             })
         })
 }
-export const buyProduct = (token,product) => (dispatch) => {
-    var completeUrl = (`http://localhost:8080/api/v1/bill/buy/${product}`);
-    axios.get(completeUrl,{ headers: { Authorization: token } })
-        .then(response => {
-            console.log(response)
-            dispatch({
-                type: "BUY_PRODUCT",
-                payload: {
-                    lastBuy: response.data.products_stock,
-                    error: null
-                },
+export const buyProduct = (token, product) => async (dispatch) => {
+    var completeUrl = (`http://localhost:8080/api/v1/bill/buy`);
+    try {
+        return await axios.post(completeUrl, product, { headers: { Authorization: token } })
+            .then(response => {
+                dispatch({
+                    type: "BUY_PRODUCT",
+                    payload: {
+                        lastBuy: response.data.products_stocks
+                    },
+                })
+                return true
             })
-        })
-        .catch(error => { 
-            dispatch({
-                type: "BUY_PRODUCT",
-                payload: {
-                    bills: null,
-                    error: error
-                },
-            })
-        })
+    } catch{
+        return false
+    }
 }

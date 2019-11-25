@@ -3,9 +3,11 @@ import { Link, withRouter } from 'react-router-dom'
 import { Navbar, Nav, Form, FormControl, NavDropdown, Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { loginUser, logoutUser, registryUser } from '../actions/auth'
-import { FaUser } from "react-icons/fa";
+import {  showCartModal } from '../actions/cart'
+import { GiShoppingCart } from "react-icons/gi"
 import RegistryModal from "./RegistryModal"
 import LoginModal from "./LoginModal"
+import CartModal from "./CartModal"
 import "../css/NavBar.css"
 
 class NavBar extends React.Component {
@@ -22,6 +24,10 @@ class NavBar extends React.Component {
     handleSendMessage(target) {
         target.preventDefault();
         this.props.history.push(`/search/${this.state.text}`);
+    }
+
+    sayHola(){
+        alert("Hola")
     }
     render() {
         return (
@@ -47,13 +53,13 @@ class NavBar extends React.Component {
                     </Form>
                     {this.props.token ?
 
-                        <DropdownButton className="login-button" drop={"left"} id="bg-vertical-dropdown-3" title={<FaUser />}>
+                        <DropdownButton className="login-button" drop={"down"} id="bg-vertical-dropdown-3" title={"Mi perfil"}>
                             <Dropdown.Item as="button" onClick={() => { this.props.logoutUser() }}>Logout</Dropdown.Item>
                             <Link to={"/mybills"} className="dropdown-item">Mis pedidos</Link>
                         </DropdownButton>
                         :
                         <>
-                            <Button className="login-button" onClick={() => {this.setState({ showLoginModal: true })}}>
+                            <Button className="login-button" onClick={() => { this.setState({ showLoginModal: true }) }}>
                                 Login
                             </Button>
                             <LoginModal
@@ -72,6 +78,17 @@ class NavBar extends React.Component {
                         </>
                     }
                 </Navbar.Collapse>
+                {this.props.token ?
+                    <div>
+                        <div className="div-cart" onClick={() => { this.props.showCartModal(true) }}>
+                            <GiShoppingCart 
+                            hola={"hola"}/>
+                            <span className="cart-count">{this.props.cart.length}</span>
+                        </div>
+                        <CartModal />
+                    </div>
+                    : ""
+                }
             </Navbar>
         )
     }
@@ -81,13 +98,15 @@ NavBar = withRouter(NavBar);
 const mapStateToProps = state => ({
     productsTypes: state.init.productsTypes,
     token: state.auth.token,
+    cart: state.cart.cart,
     error: state.auth.error
 })
 
 const mapDispatchToProps = dispatch => ({
     loginUser: (user) => dispatch(loginUser(user)),
     logoutUser: () => dispatch(logoutUser()),
-    registryUser: (user) => dispatch(registryUser(user))
+    registryUser: (user) => dispatch(registryUser(user)),
+    showCartModal: (show) => dispatch(showCartModal(show))
 })
 export default connect(
     mapStateToProps,
